@@ -200,7 +200,7 @@ export default function AssessmentPage() {
                 {/* Compressed Input Field */}
                 <input
                     type="text"
-                    placeholder="e.g. Carl Nieva"
+                    placeholder="e.g. Juan Dela Cruz"
                     value={localName}
                     onChange={(e) => setLocalName(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleStart()}
