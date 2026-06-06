@@ -49,7 +49,7 @@ import corporateTrainerImg from '../assets/extra_images/CorporateTrainer.png';
 import communicationsOfficerImg from '../assets/extra_images/CommunicationsOfficer.png';
 import prOfficerImg from '../assets/extra_images/PublicRelationsOfficer.png';
 import customerRelationsImg from '../assets/extra_images/CustomerRelationsSpecialist.png';
-import recruitmentSpecialistImg from '../assets/extra_images/Research_Assistant.png';
+import recruitmentSpecialistImg from '../assets/extra_images/Human_Resources_Officer.png';
 import academicCoordinatorImg from '../assets/extra_images/SchoolAdministrator.png';
 import curriculumDeveloperImg from '../assets/extra_images/CurriculumDeveloper.png';
 import learningMaterialsImg from '../assets/extra_images/LearningMaterialsWriter.png';
@@ -80,7 +80,7 @@ const TARGET_CAREERS = [
     { name: "Translator", image: translatorImg, description: "Converts written texts from one language to another while preserving the original meaning, tone, and context." },
     { name: "Interpreter", image: interpreterImg, description: "Facilitates spoken communication between individuals who speak different languages by accurately translating conversations in real time." },
     { name: "Human Resources Officer", image: hrOfficerImg, description: "Manages employee recruitment, records, benefits, and workplace policies while supporting organizational and staff development." },
-    { name: "Training & Development Specialist", image: trainingDevSpecialistImg, description: "Designs and implements training programs that enhance employees' skills, knowledge, and job performance." },
+    { name: "Training and Development Specialist", image: trainingDevSpecialistImg, description: "Designs and implements training programs that enhance employees' skills, knowledge, and job performance." },
     { name: "Corporate Trainer", image: corporateTrainerImg, description: "Conducts workshops, seminars, and training sessions to help employees develop professional competencies and workplace skills." },
     { name: "Communications Officer", image: communicationsOfficerImg, description: "Develops and delivers internal and external communications to ensure clear, consistent, and effective organizational messaging." },
     { name: "Public Relations Officer", image: prOfficerImg, description: "Maintains a positive public image for an organization by managing media relations, public communications, and promotional activities." },

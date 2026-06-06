@@ -15,9 +15,14 @@ import { ArrowLeft, Compass, BookOpen, HeartPulse, Info, LayoutGrid } from 'luci
 import LandingPage from './pages/LandingPage';
 import AssessmentPage from './pages/AssessmentPage';
 import ResultPage from './pages/ResultPage';
-import SelfAwareness from './components/SelfAwareness';
 import AboutPage from './pages/AboutPage';
+import GuidancePage from './pages/GuidancePage';
+import SkillsPage from './pages/SkillsPage';
+// Skill Modules
+import SelfAwareness from './components/SelfAwareness';
 import CommunicationSkills from './components/CommunicationSkills';
+import GoalSetting from './components/GoalSetting';
+import Adaptability from './components/Adaptability';
 import { AssessmentProvider, useAssessment } from './context/AssessmentContext';
 
 // --------------------------------------------------------------------------
@@ -120,8 +125,13 @@ const MainLayout = () => {
             {results && <ResultPage />}
           </>
         )}
-        {activeView === 'skills' && <div className="w-full flex-grow py-12 px-4 md:px-8"><SelfAwareness /></div>}
-        {activeView === 'guidance' && <div className="w-full flex-grow py-12 px-4 md:px-8 flex items-center justify-center"><CommunicationSkills /></div>}
+
+        {/* TABBED SKILLS ROUTING */}
+        {activeView === 'skills' && <SkillsPage />}
+
+        {/* CORRECTED GUIDANCE ROUTING */}
+        {activeView === 'guidance' && <GuidancePage />}
+
         {activeView === 'about' && <AboutPage />}
       </main>
 

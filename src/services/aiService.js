@@ -1,3 +1,13 @@
+/**
+ * --------------------------------------------------------------------------
+ * CAREER PATHS - AI SERVICE INTEGRATION
+ * --------------------------------------------------------------------------
+ * Handles all Groq LLM API communications for the telemetry results,
+ * interview practice, and adaptability modules.
+ * --------------------------------------------------------------------------
+ */
+
+// 1. MAIN ASSESSMENT ANALYSIS
 export const generateAnalysis = async (userName, topMatch, alternatives, contextNotes = {}) => {
     const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
@@ -64,9 +74,7 @@ export const generateAnalysis = async (userName, topMatch, alternatives, context
     }
 };
 
-/**
- * Evaluates a user's interview answer and provides structured feedback.
- */
+// 2. INTERVIEW PRACTICE ANALYSIS
 export const analyzeInterviewAnswer = async (question, answer) => {
     const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
@@ -110,6 +118,41 @@ export const analyzeInterviewAnswer = async (question, answer) => {
         return JSON.parse(data.choices[0].message.content);
     } catch (error) {
         console.error("Groq Interview Analysis Error:", error);
+        return null;
+    }
+};
+
+// 3. ADAPTABILITY (PLAN B) ANALYSIS
+export const analyzeAdaptability = async (q1, q2, q3) => {
+    const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
+    if (!API_KEY) return null;
+
+    const systemPrompt = `
+    You are an empathetic Career Coach. Review the user's "Plan B" adaptability answers.
+    Format your response EXACTLY as a JSON object with this key:
+    "advice" (string: Provide 2-3 sentences of constructive feedback and encouragement based on their plan).
+    `;
+
+    const userPrompt = `1. If career changes: ${q1}\n2. Steps to adapt: ${q2}\n3. Skills to adapt: ${q3}`;
+
+    try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
+            body: JSON.stringify({
+                model: "llama-3.1-8b-instant",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: userPrompt }
+                ],
+                response_format: { type: "json_object" },
+                temperature: 0.7
+            })
+        });
+        const data = await response.json();
+        return JSON.parse(data.choices[0].message.content);
+    } catch (error) {
+        console.error("Groq Adaptability Analysis Error:", error);
         return null;
     }
 };

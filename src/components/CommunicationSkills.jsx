@@ -20,8 +20,6 @@ export default function CommunicationSkills() {
         if (!answer.trim()) return;
         setIsAnalyzing(true);
         setFeedback(null);
-
-        // Call the Groq AI service to evaluate the text
         const result = await analyzeInterviewAnswer(selectedQuestion, answer);
         setFeedback(result);
         setIsAnalyzing(false);
@@ -29,31 +27,23 @@ export default function CommunicationSkills() {
 
     return (
         <div className="w-full max-w-2xl mx-auto">
-            {/* Header Section */}
             <div className="mb-10 text-center">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-sm text-[10px] font-bold uppercase tracking-[0.2em] border border-purple-500/20 mb-6">
                     <Mic className="w-3.5 h-3.5" /> Communication Skills
                 </div>
-                <h2 className="text-xl md:text-2xl font-serif font-bold text-slate-900 dark:text-white tracking-tight mb-2">Practice Your Interview Answers</h2>
-                <p className="text-slate-500 dark:text-slate-400 text-xs">Choose a question and type your answer to receive automated AI feedback on clarity, tone, and structure.</p>
+                <h2 className="text-xl md:text-2xl font-serif font-bold text-slate-900 dark:text-white tracking-tight mb-2">Practice Your Interview</h2>
+                <p className="text-slate-500 dark:text-slate-400 text-xs">Choose a question and type your answer to receive automated AI feedback.</p>
             </div>
 
             <div className="bg-white dark:bg-[#0f1629] p-6 md:p-8 rounded-md border border-slate-200 dark:border-slate-800/80 shadow-xl">
-
-                {/* Question Selector */}
                 <div className="mb-6">
-                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-widest">
-                        Select Interview Question
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-widest">Select Question</label>
+                    <div className="grid grid-cols-1 gap-2">
                         {INTERVIEW_QUESTIONS.map((q) => (
                             <button
                                 key={q}
-                                onClick={() => {
-                                    setSelectedQuestion(q);
-                                    setFeedback(null); // Reset feedback on question change
-                                }}
-                                className={`text-left p-3 rounded-sm text-xs font-medium border transition-all duration-300 ${selectedQuestion === q
+                                onClick={() => { setSelectedQuestion(q); setFeedback(null); }}
+                                className={`text-left p-3 rounded-sm text-xs font-medium border transition-all ${selectedQuestion === q
                                         ? 'bg-purple-50 dark:bg-purple-500/10 border-purple-500 dark:border-purple-500/50 text-purple-700 dark:text-purple-400'
                                         : 'bg-slate-50 dark:bg-[#0a0f1c] border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600'
                                     }`}
@@ -64,7 +54,6 @@ export default function CommunicationSkills() {
                     </div>
                 </div>
 
-                {/* Answer Input */}
                 <div className="mb-6">
                     <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-widest flex items-center gap-2">
                         <MessageSquare className="w-3.5 h-3.5" /> Your Response
@@ -73,58 +62,27 @@ export default function CommunicationSkills() {
                         placeholder="Type your answer here..."
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
-                        className="w-full p-4 rounded-sm bg-slate-50 dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 
-                                   focus:border-purple-500 dark:focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none 
-                                   text-slate-700 dark:text-slate-300 text-sm resize-none transition-colors h-32 leading-relaxed"
+                        className="w-full p-4 rounded-sm bg-slate-50 dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 focus:border-purple-500 outline-none text-slate-700 dark:text-slate-300 text-sm resize-none h-32"
                     />
                 </div>
 
-                {/* Analyze Button */}
                 <button
                     onClick={handleAnalyze}
                     disabled={isAnalyzing || !answer.trim()}
-                    className="w-full flex items-center justify-center gap-2 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 
-                               rounded-sm text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 dark:hover:bg-slate-200 
-                               transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-sm text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors disabled:opacity-50"
                 >
-                    {isAnalyzing ? (
-                        <><Loader2 className="w-4 h-4 animate-spin" /> Analyzing Response...</>
-                    ) : (
-                        <><Sparkles className="w-4 h-4" /> Analyze My Answer</>
-                    )}
+                    {isAnalyzing ? <><Loader2 className="w-4 h-4 animate-spin" /> Analyzing...</> : <><Sparkles className="w-4 h-4" /> Analyze Answer</>}
                 </button>
 
-                {/* AI Feedback Display */}
                 <AnimatePresence>
                     {feedback && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                            animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
-                            className="overflow-hidden"
-                        >
-                            <div className="p-5 bg-slate-50 dark:bg-[#0a0f1c]/50 rounded-sm border border-slate-200 dark:border-slate-800/80">
-                                <h4 className="text-[10px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                                    <CheckCircle2 className="w-3.5 h-3.5" /> AI Feedback Analysis
-                                </h4>
-
-                                <div className="space-y-4">
-                                    <div>
-                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">Clarity</span>
-                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{feedback.clarity}</p>
-                                    </div>
-                                    <div>
-                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">Tone</span>
-                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{feedback.tone}</p>
-                                    </div>
-                                    <div>
-                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">Structure</span>
-                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{feedback.structure}</p>
-                                    </div>
-                                    <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
-                                        <span className="text-xs font-bold text-cyan-600 dark:text-cyan-500 uppercase tracking-wider block mb-1">Expert Suggestion</span>
-                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{feedback.suggestion}</p>
-                                    </div>
-                                </div>
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="overflow-hidden">
+                            <div className="p-5 bg-purple-50 dark:bg-purple-500/5 border border-purple-200 dark:border-purple-500/20 rounded-sm mt-6 space-y-4">
+                                <h4 className="text-[10px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5" /> AI Feedback</h4>
+                                <div><span className="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase block mb-1">Clarity</span><p className="text-sm text-slate-600 dark:text-slate-400">{feedback.clarity}</p></div>
+                                <div><span className="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase block mb-1">Tone</span><p className="text-sm text-slate-600 dark:text-slate-400">{feedback.tone}</p></div>
+                                <div><span className="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase block mb-1">Structure</span><p className="text-sm text-slate-600 dark:text-slate-400">{feedback.structure}</p></div>
+                                <div className="pt-3 border-t border-slate-200 dark:border-slate-800"><span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-500 uppercase block mb-1">Expert Suggestion</span><p className="text-sm text-slate-600 dark:text-slate-400">{feedback.suggestion}</p></div>
                             </div>
                         </motion.div>
                     )}

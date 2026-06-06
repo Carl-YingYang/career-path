@@ -194,3 +194,57 @@ export const generatePDF = (userName, results, aiData) => {
     // Output Generation
     doc.save(`${userName.replace(/\s+/g, '_')}_Career_Telemetry.pdf`);
 };
+
+export const generateGoalPDF = (selectedShort, selectedLong, personalGoal) => {
+    const doc = new jsPDF({ format: 'a4' });
+    let currentY = 25;
+
+    // Palettes (matching your existing service)
+    const textDark = [15, 22, 41];
+    const textMuted = [100, 116, 139];
+    const accentEmerald = [16, 185, 129]; // Emerald-500
+
+    // Header
+    doc.setFillColor(...accentEmerald);
+    doc.rect(20, currentY - 5, 2, 14, 'F');
+    doc.setTextColor(...textDark);
+    doc.setFont("times", "bold");
+    doc.setFontSize(22);
+    doc.text("CAREER VISION BOARD", 26, currentY + 2);
+    currentY += 20;
+
+    // Section: Short Term
+    doc.setTextColor(...accentEmerald);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.text("SHORT-TERM GOALS (0-1 YEAR)", 20, currentY);
+    currentY += 8;
+    doc.setTextColor(...textDark);
+    doc.setFont("helvetica", "normal");
+    selectedShort.forEach(g => {
+        doc.text(`- ${g}`, 25, currentY);
+        currentY += 7;
+    });
+
+    currentY += 10;
+    // Section: Long Term
+    doc.setTextColor(...accentEmerald);
+    doc.text("LONG-TERM GOALS (3-5 YEARS+)", 20, currentY);
+    currentY += 8;
+    doc.setTextColor(...textDark);
+    selectedLong.forEach(g => {
+        doc.text(`- ${g}`, 25, currentY);
+        currentY += 7;
+    });
+
+    // Section: Personal Goal
+    currentY += 10;
+    doc.setTextColor(...accentEmerald);
+    doc.text("PERSONAL CAREER GOAL", 20, currentY);
+    currentY += 8;
+    doc.setTextColor(...textDark);
+    const splitGoal = doc.splitTextToSize(personalGoal || "No personal goal defined.", 160);
+    doc.text(splitGoal, 20, currentY);
+
+    doc.save("My_Career_Vision_Board.pdf");
+};
