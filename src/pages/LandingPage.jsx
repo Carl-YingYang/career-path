@@ -203,7 +203,6 @@ const EnhancedCareerCard = ({ career, index }) => {
                 {/* Interactive Indicator */}
                 <div className="flex items-center gap-2 text-cyan-400 opacity-0 group-hover:opacity-100 
                               transition-all duration-500 delay-100">
-                    <span className="text-xs font-bold uppercase tracking-widest">Learn More</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
             </div>
